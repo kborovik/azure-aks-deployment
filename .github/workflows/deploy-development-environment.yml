@@ -1,0 +1,32 @@
+name: Deploy Development Environment
+
+on:
+  pull_request:
+    branches:
+      - development
+    paths:
+      - "**/*.tf"
+  push:
+    branches:
+      - development
+    paths:
+      - "**/*.tf"
+
+jobs:
+  applyTerraform:
+    name: Apply Terraform Scripts
+    runs-on: ubuntu-20.04
+    container:
+      image: ghcr.io/kborovik/terraform-azure-cli:0.13.4
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Apply Terraform Scripts
+        run: |
+          cd terraform
+          ./apply-terraform.sh DEV ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}

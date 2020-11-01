@@ -1,0 +1,44 @@
+name: Build Podinfo image
+
+env:
+  DOCKER_SERVER: ghcr.io
+  DOCKER_USER: ${{ github.actor }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+on:
+  push:
+    branches-ignore:
+      - production
+      - staging
+    paths:
+      - src/podinfo
+
+jobs:
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Log into GitHub registry
+        run: echo "${DOCKER_PASSWORD}" | docker login "${DOCKER_SERVER}" --username "${DOCKER_USER}" --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          cd src/podinfo
+
+          VERSION="$(grep 'VERSION' pkg/version/version.go | cut -d '"' -f 2)"
+          REVISION="$(git rev-parse --short HEAD)"
+          DOCKER_IMAGE_NAME="${DOCKER_SERVER}/${DOCKER_USER}/podinfo"
+
+          docker build -t "${DOCKER_IMAGE_NAME}:${VERSION}" .
+
+          docker tag "${DOCKER_IMAGE_NAME}:${VERSION}" "${DOCKER_IMAGE_NAME}:${REVISION}"
+          docker tag "${DOCKER_IMAGE_NAME}:${VERSION}" "${DOCKER_IMAGE_NAME}:latest"
+
+          docker push "${DOCKER_IMAGE_NAME}:${VERSION}"
+          docker push "${DOCKER_IMAGE_NAME}:${REVISION}"
+          docker push "${DOCKER_IMAGE_NAME}:latest"

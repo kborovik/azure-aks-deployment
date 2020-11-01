@@ -1,0 +1,3 @@
+[submodule "src/podinfo"]
+	path = src/podinfo
+	url = git@github.com:stefanprodan/podinfo.git
