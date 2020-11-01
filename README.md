@@ -18,7 +18,7 @@ Each Git branch represents a Azure deployment environment (DEV, STG, PRD).
 
 ## Workflow
 
-**issue** => **development** => **staging** => **production**
+[**PR**] => [**development**] => [**PR**] => [**staging**] => [**PR**] => [**production**]
 
 - Clone **development** branch into a local branch named after an issue (**issue**)
 - Create PR into **development** branch (DEV) from **issue** branch
