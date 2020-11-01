@@ -55,7 +55,7 @@ variable "kubernetes_version" {
 variable "vm_size" {
   description = "Azure AKS pool VM SKU size"
   type        = string
-  default     = "Standard_B2ms" # alternatives: Standard_B2ms (8G_RAM), Standard_E2_v3 (16G_RAM, C$117/M)
+  default     = "Standard_E2_v3" # alternatives: Standard_B2ms (8G_RAM), Standard_E2_v3 (16G_RAM, C$117/M)
 }
 
 variable "vm_min_count" {

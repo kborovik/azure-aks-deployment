@@ -23,7 +23,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     name                  = "nodepool1"
     vm_size               = var.vm_size
     os_disk_size_gb       = 32
-    node_count            = 2
+    node_count            = 1
     enable_auto_scaling   = false
     enable_node_public_ip = false
     type                  = "VirtualMachineScaleSets"
