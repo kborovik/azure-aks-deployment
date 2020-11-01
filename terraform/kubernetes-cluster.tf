@@ -1,5 +1,5 @@
 #
-# Azure Kubernetes Services (AKS)
+# Azure Kubernetes Services (AKS).
 #
 
 resource "azurerm_kubernetes_cluster" "main" {
