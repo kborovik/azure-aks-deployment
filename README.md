@@ -18,18 +18,19 @@ Each Git branch represents a Azure deployment environment (DEV, STG, PRD).
 
 ## Workflow
 
-[**PR**] => [**development**] => [**PR**] => [**staging**] => [**PR**] => [**production**]
+(**PR**) => [**development**] => (**rebase-ff**) => [**staging**] => (**rebase-ff**) => [**production**]
 
-- Clone **development** branch into a local branch named after an issue (**issue**)
-- Create PR into **development** branch (DEV) from **issue** branch
+- Create PR into **development** branch
 - Attach issue to the PR
 - Push changes into **issue** branch
-- Confirm successful GitHub Actions run
+- Confirm successful deployment of **development** environment
 - Merge PR into **development** branch
-- Create PR from **development** into **staging** branch
-- Merge PR
-- Create PR from **staging** into **production** branch
-- Merge PR
+- Rebase (Fast-Forward) **staging** on top of **development** branch
+- Push changes into **staging** branch
+- Confirm successful deployment of **staging** environment
+- Rebase (Fast-Forward) **production** on top of **staging** branch
+- Push changes into **staging** branch
+- Confirm successful deployment of **production** environment
 
 ---
 
