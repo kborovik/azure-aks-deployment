@@ -17,7 +17,7 @@ jobs:
     name: Apply Terraform Scripts
     runs-on: ubuntu-20.04
     container:
-      image: ghcr.io/kborovik/terraform-azure-cli:0.13.4
+      image: ghcr.io/kborovik/terraform-azure-cli:0.13.5
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.DOCKER_PASSWORD }}

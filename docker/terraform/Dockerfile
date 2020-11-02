@@ -1,6 +1,6 @@
 FROM ubuntu:20.04 as terraform
 
-ARG TERRAFORM_VERSION=0.13.4
+ARG TERRAFORM_VERSION=0.13.5
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install Azure cli.
