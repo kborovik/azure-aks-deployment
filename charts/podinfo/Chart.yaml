@@ -1,6 +1,12 @@
-apiVersion: v1
-version: 5.0.0
-appVersion: 5.0.0
+apiVersion: v2
 name: podinfo
-engine: gotpl
+version: 0.8.0
 description: Podinfo Helm chart for Kubernetes
+appVersion: 5.0.0
+
+# dependenices:
+#   - name:
+#     enabled: true
+#     version:
+#     repository:
+#     tags:
