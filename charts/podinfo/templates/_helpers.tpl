@@ -46,26 +46,16 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "podinfo.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "podinfo.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ include "podinfo.fullname" . }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
 {{- define "podinfo.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
+{{- if .Values.serviceAccount.enabled }}
 {{- default (include "podinfo.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the docker-pull-image secret
-*/}}
-{{- define "podinfo.imagePullSecret" }}
-{{- with .Values.image }}
-{{- printf "{\"auths\":{\"%s\":{\"username\":\"%s\",\"password\":\"%s\",\"email\":\"%s\",\"auth\":\"%s\"}}}" .registry .username (required "Docker registry password is required. Set it with --set image.password=\"MyBigPassword\"" .password) .email (printf "%s:%s" .username .password | b64enc) | b64enc }}
 {{- end }}
 {{- end }}
