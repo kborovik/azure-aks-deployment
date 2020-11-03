@@ -1,25 +1,28 @@
 #!/usr/bin/env bash
 
-ARM_TENANT_ID="${4:-$(pass azure/tenant_id)}"
-ARM_SUBSCRIPTION_ID="${3:-$(pass azure/subscription_id)}"
-ARM_CLIENT_ID="${2:-$(pass azure/client_id)}"
-ARM_CLIENT_SECRET="${1:-$(pass azure/client_secret)}"
-GIT_REF="$(git rev-parse --abbrev-ref HEAD)"
+ENVIRONMENT=${1,,}
+ARM_CLIENT_SECRET="${2:-$(pass azure/client_secret)}"
+ARM_CLIENT_ID="${3:-$(pass azure/client_id)}"
+ARM_SUBSCRIPTION_ID="${4:-$(pass azure/subscription_id)}"
+ARM_TENANT_ID="${5:-$(pass azure/tenant_id)}"
 
-echo -e "\nAzure Login"
-az login --service-principal --tenant "${ARM_TENANT_ID}" --username "${ARM_CLIENT_ID}" --password "${ARM_CLIENT_SECRET}" --output table
+_usage() {
+  echo
+  echo "Usage: $(basename "$0") (DEV|STG|PRD)"
+  echo
+
+  exit 1
+}
+
+if [[ ! "${ENVIRONMENT}" =~ (dev|stg|prd) ]] || [[ -z "${ARM_CLIENT_SECRET}" ]]; then
+  _usage
+fi
+
+echo -e
+az login --service-principal --tenant "${ARM_TENANT_ID}" --username "${ARM_CLIENT_ID}" --password "${ARM_CLIENT_SECRET}" --output table --only-show-errors
 az account set --subscription "${ARM_SUBSCRIPTION_ID}"
 
 echo -e "\nGet AKS Credentials"
-if [[ "${GIT_REF}" == "development" ]]; then
-  az aks get-credentials --resource-group aks-dev --name aks-dev --overwrite-existing
-elif [[ "${GIT_REF}" == "staging" ]]; then
-  az aks get-credentials --resource-group aks-stg --name aks-stg --overwrite-existing
-elif [[ "${GIT_REF}" == "production" ]]; then
-  az aks get-credentials --resource-group aks-prd --name aks-prd --overwrite-existing
-else
-  echo -e "\nGit branch ${GIT_REF} is not part of the supported Git Flow"
-fi
+az aks get-credentials --resource-group "aks-${ENVIRONMENT}" --name "aks-${ENVIRONMENT}" --overwrite-existing
 
-echo -e "\nAzure Logout"
 az logout
