@@ -25,7 +25,7 @@ _install() {
   DOCKER_PASSWORD="$(pass github/docker_password)"
 
   echo -e "\n Deploying HELM chart..."
-  helm upgrade "${RELEASE_NAME}" ./podinfo ${DEBUG} ${DRY_RUN} \
+  helm upgrade "${RELEASE_NAME}" charts/podinfo ${DEBUG} ${DRY_RUN} \
     --install \
     --create-namespace \
     --namespace "default" \
