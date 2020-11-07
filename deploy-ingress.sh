@@ -11,7 +11,7 @@ CHART_VERSION=${6:-"3.8.0"}
 
 _usage() {
   echo
-  echo "Usage: $(basename "$0") (DEV|STG|PRD)"
+  echo "Usage: $(basename "$0") (DEV|STG|PRD) "
   echo
 
   exit 1
