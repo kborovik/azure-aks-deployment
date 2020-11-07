@@ -4,10 +4,10 @@ set -e
 
 # Terraform Ref: https://www.terraform.io/docs/providers/azurerm/guides/service_principal_client_secret.html
 
-export ARM_TENANT_ID="${5:-$(pass azure/tenant_id)}"
-export ARM_SUBSCRIPTION_ID="${4:-$(pass azure/subscription_id)}"
-export ARM_CLIENT_ID="${3:-$(pass azure/client_id)}"
-export ARM_CLIENT_SECRET="${2:-$(pass azure/client_secret)}"
+export ARM_TENANT_ID=${5:-"$(pass azure/tenant_id)"}
+export ARM_SUBSCRIPTION_ID=${4:-"$(pass azure/subscription_id)"}
+export ARM_CLIENT_ID=${3:-"$(pass azure/client_id)"}
+export ARM_CLIENT_SECRET=${2:-"$(pass azure/client_secret)"}
 
 export TF_VAR_environment=${1,,}
 export TF_VAR_tenant_id=${ARM_TENANT_ID}
@@ -17,7 +17,7 @@ export TF_VAR_client_secret=${ARM_CLIENT_SECRET}
 
 _usage() {
     echo
-    echo "Usage: $(basename "$0") <(DEV|STG|PRD)> <ARM_CLIENT_SECRET> <ARM_CLIENT_ID> <ARM_SUBSCRIPTION_ID> <ARM_TENANT_ID>"
+    echo "Usage: $(basename "$0") <(dev|stg|prd)> <ARM_CLIENT_SECRET> <ARM_CLIENT_ID> <ARM_SUBSCRIPTION_ID> <ARM_TENANT_ID>"
     echo
 
     exit 1
