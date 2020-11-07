@@ -1,5 +1,7 @@
 FROM ubuntu:20.04 as terraform
 
+LABEL org.opencontainers.image.source https://github.com/kborovik/azure-aks-deployment
+
 ARG TERRAFORM_VERSION=0.13.5
 ENV DEBIAN_FRONTEND noninteractive
 
