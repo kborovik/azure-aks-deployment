@@ -1,11 +1,6 @@
 name: Deploy Development Environment
 
 on:
-  pull_request:
-    branches:
-      - development
-    paths:
-      - "**/*.tf"
   push:
     branches:
       - development
