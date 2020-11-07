@@ -45,7 +45,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 # create a custom role in 'aks-shared' resource group and assign the following permissions to SPN:
 # - Microsoft.Authorization/roleAssignments (read,write,delete)
 resource "azurerm_role_assignment" "shared" {
-  scope                = "/subscriptions/${var.subscription_id}/resourceGroups/${var.project}-shared"
+  scope                = azurerm_resource_group.shared.id
   role_definition_name = "Contributor"
   principal_id         = azurerm_kubernetes_cluster.main.identity[0].principal_id
 }
