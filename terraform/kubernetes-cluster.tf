@@ -47,7 +47,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 resource "azurerm_role_assignment" "shared" {
   scope                = azurerm_resource_group.shared.id
   role_definition_name = "Contributor"
-  principal_id         = azurerm_kubernetes_cluster.main.identity[0].principal_id
+  principal_id         = azurerm_kubernetes_cluster.main.kubelet_identity[0].object_id
 }
 
 output "aks_name" {
