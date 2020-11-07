@@ -10,7 +10,7 @@ on:
 
 jobs:
   applyTerraform:
-    name: Apply Terraform Scripts
+    name: Deploy AKS Cluster
     runs-on: ubuntu-20.04
     container:
       image: ghcr.io/kborovik/terraform-azure-cli:0.13.5
