@@ -11,6 +11,7 @@ on:
       - development
     paths:
       - "**/*.tf"
+      - "deploy-ingress.sh"
 
 jobs:
   applyTerraform:
@@ -33,4 +34,4 @@ jobs:
 
       - name: Deploy Ingress Controller
         run: |
-          ./deploy-ingress.sh DEV
+          ./deploy-ingress.sh DEV ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
