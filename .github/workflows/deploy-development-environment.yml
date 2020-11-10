@@ -7,6 +7,7 @@ on:
     paths:
       - "**/*.tf"
       - "deploy-ingress.sh"
+      - "deploy-external-dns.sh"
 
 jobs:
   applyTerraform:
@@ -30,3 +31,7 @@ jobs:
       - name: Deploy Ingress Controller
         run: |
           ./deploy-ingress.sh DEV ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+
+      - name: Deploy External DNS
+        run: |
+          ./deploy-external-dns.sh DEV ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
