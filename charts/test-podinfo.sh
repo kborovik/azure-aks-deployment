@@ -2,6 +2,7 @@
 
 set -e
 
+ENVIRONMENT="dev"
 RELEASE_NAME="podinfo"
 INSTALL=true
 
@@ -21,18 +22,16 @@ EOF
 
 _install() {
 
-  echo -n -e "\n Getting Docker password from Pass..."
-  DOCKER_PASSWORD="$(pass github/docker_password)"
-
   echo -e "\n Deploying HELM chart..."
-  helm upgrade "${RELEASE_NAME}" charts/podinfo ${DEBUG} ${DRY_RUN} \
+  helm upgrade "${RELEASE_NAME}" podinfo ${DEBUG} ${DRY_RUN} \
     --install \
     --create-namespace \
     --namespace "default" \
     --atomic \
     --wait \
     --timeout=2m \
-    --set image.password="${DOCKER_PASSWORD}"
+    --set "ingress.hosts[0]=podinfo.${ENVIRONMENT}.lab5.ca"
+  # --set "ingress.tls[0].hosts[0]=podinfo.${ENVIRONMENT}.lab5.ca"
 }
 
 _uninstall() {

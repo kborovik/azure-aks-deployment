@@ -1,6 +1,6 @@
 # Default values for podinfo.
 
-replicaCount: 1
+replicaCount: 4
 logLevel: info
 backend: #http://backend-podinfo:9898/echo
 backends: []
@@ -73,13 +73,13 @@ serviceMonitor:
   interval: 15s
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  path: /*
-  hosts: []
-#    - podinfo.local
+  path: /
+  hosts:
+   - podinfo.dev.lab5.ca
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
