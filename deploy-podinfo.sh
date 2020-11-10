@@ -1,78 +1,39 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 set -e
 
-RELEASE_NAME="podinfo"
-INSTALL=true
+ENVIRONMENT=${1,,}
+ARM_CLIENT_SECRET=${2:-$(pass azure/client_secret)}
+ARM_CLIENT_ID=${3:-$(pass azure/client_id)}
+ARM_SUBSCRIPTION_ID=${4:-$(pass azure/subscription_id)}
+ARM_TENANT_ID=${5:-$(pass azure/tenant_id)}
 
 _usage() {
-  cat <<EOF
+  echo
+  echo "Usage: $(basename "$0") (DEV|STG|PRD)"
+  echo
 
-Usage: $(basename "$0") -i [-u] [-r <release_name>] [-d]
-
-        [-i]                    # install HELM chart
-        [-u]                    # uninstall HELM chart
-        [-r <release_name>]     # set HELM chart release name (default: podinfo)
-        [-d]                    # set HELM debug flags (--dry-run --debug)
-
-EOF
   exit 1
 }
 
-_install() {
-
-  echo -n -e "\n Getting Docker password from Pass..."
-  DOCKER_PASSWORD="$(pass github/docker_password)"
-
-  echo -e "\n Deploying HELM chart..."
-  helm upgrade "${RELEASE_NAME}" charts/podinfo ${DEBUG} ${DRY_RUN} \
-    --install \
-    --create-namespace \
-    --namespace "default" \
-    --atomic \
-    --wait \
-    --timeout=2m \
-    --set image.password="${DOCKER_PASSWORD}"
-}
-
-_uninstall() {
-
-  if ! helm uninstall --namespace "${RELEASE_NAME}" "${RELEASE_NAME}"; then
-    helm list --all-namespaces
-    echo -e "\n Try to use: $(basename "$0") -u -r <name_release>"
-  fi
-}
-
-# Start main
-
-if (($# == 0)); then
+if [[ ! "${ENVIRONMENT}" =~ (dev|stg|prd) ]]; then
   _usage
 fi
 
-while getopts "ihudr:" OPT; do
+echo -e
+az login --service-principal --tenant "${ARM_TENANT_ID}" --username "${ARM_CLIENT_ID}" --password "${ARM_CLIENT_SECRET}" --output table --only-show-errors
+az account set --subscription "${ARM_SUBSCRIPTION_ID}"
 
-  case ${OPT} in
-  i)
-    INSTALL=true
-    ;;
-  u)
-    INSTALL=false
-    ;;
-  r)
-    RELEASE_NAME=${OPTARG}
-    ;;
-  d)
-    DEBUG="--debug"
-    DRY_RUN="--dry-run"
-    ;;
-  ?)
-    _usage
-    ;;
-  esac
-done
+echo -e "\nGet AKS Credentials"
+az aks get-credentials --resource-group "aks-${ENVIRONMENT}" --name "aks-${ENVIRONMENT}" --overwrite-existing
 
-if [[ "${INSTALL}" == "true" ]]; then
-  _install
-else
-  _uninstall
-fi
+az logout
+
+echo -e "\nDeploy Podinfo"
+helm upgrade podinfo charts/podinfo \
+  --install \
+  --create-namespace \
+  --namespace "default" \
+  --atomic \
+  --wait \
+  --timeout=2m
