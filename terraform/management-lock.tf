@@ -1,5 +1,5 @@
 #
-# Azure Locks
+# Azure Locks.
 #
 # Create Azure custom role to allow Azure lock creation
 # Policy scope can be Subscription, Resource Group or Storage Account
