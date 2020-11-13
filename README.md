@@ -4,6 +4,16 @@ This work aims to explore ways to automate Continuous Delivery and Continuous De
 
 ---
 
+# The Problem
+
+- What is the difference between **development**, **staging**, and **production** infrastructure configuration at any given time?
+
+- Can the changes to the application code and infrastructure configuration be safely and reliably end-to-end tested?
+
+- Can the 5% failure rate with "503 Service Unavailable" in a **production** environment be reproduced in a **staging** environment?
+
+---
+
 ## CI/CD Pipeline
 
 ![CI/CD Pipeline](cicd.png)
