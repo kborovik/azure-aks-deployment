@@ -6,6 +6,7 @@ resource "azurerm_linux_virtual_machine" "github-runner" {
   admin_username                  = "github"
   disable_password_authentication = true
   provision_vm_agent              = true
+  custom_data                     = base64encode(file("cloud-init.sh"))
 
   network_interface_ids = [
     azurerm_network_interface.github-runner.id
