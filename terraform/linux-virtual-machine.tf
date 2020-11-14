@@ -86,6 +86,8 @@ resource "azurerm_public_ip" "github-runner" {
   resource_group_name = azurerm_resource_group.shared.name
   location            = var.location
   allocation_method   = "Dynamic"
+  domain_name_label   = "lab5-github-runner-01"
+  ip_version          = "IPv4"
 
   tags = {
     "managed_by" = "https://github.com/kborovik/azure-aks-deployment"
