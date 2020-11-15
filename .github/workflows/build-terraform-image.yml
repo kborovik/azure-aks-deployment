@@ -16,7 +16,8 @@ on:
 jobs:
   build:
     name: Build Docker Images
-    runs-on: ubuntu-20.04
+    # runs-on: ubuntu-20.04
+    runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
