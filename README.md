@@ -4,7 +4,7 @@ This work aims to explore ways to automate Continuous Delivery and Continuous De
 
 ---
 
-# The Problem
+# Problem
 
 - What is the difference between **development**, **staging**, and **production** infrastructure configuration at any given time?
 
@@ -13,6 +13,8 @@ This work aims to explore ways to automate Continuous Delivery and Continuous De
 - Can the 5% failure rate with "503 Service Unavailable" in a **production** environment be reproduced in a **staging** environment?
 
 ---
+
+# Solution
 
 ## CI/CD Pipeline
 
