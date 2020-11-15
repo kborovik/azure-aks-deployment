@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update && apt-get -y install ca-certificates curl apt-transport-https lsb-release gnupg apt-utils
 
-# Install Terraform cli
+# Install Terraform cli.
 RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
   && echo "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/terraform.list \
   && apt-get -y update \
