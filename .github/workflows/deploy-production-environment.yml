@@ -1,5 +1,8 @@
 name: Deploy Production Environment
 
+env:
+  environment: prd
+
 on:
   push:
     branches:
@@ -7,7 +10,7 @@ on:
 
 jobs:
   applyTerraform:
-    name: Apply Terraform Scripts
+    name: Deploy AKS Cluster
     runs-on: ubuntu-20.04
     container:
       image: ghcr.io/kborovik/terraform-azure-cli:0.13.5
@@ -19,7 +22,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Apply Terraform Scripts
-        run: |
-          cd terraform
-          ./apply-terraform.sh PRD ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+      - name: Deploy Azure Kubernetes Services
+        run: ./apply-terraform.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+
+      - name: Deploy Ingress Controller
+        run: ./deploy-ingress.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+
+      - name: Deploy External DNS
+        run: ./deploy-external-dns.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+
+      - name: Deploy Podinfo
+        run: ./deploy-podinfo.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}

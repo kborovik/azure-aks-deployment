@@ -32,6 +32,8 @@ echo "ARM_TENANT_ID         ${ARM_TENANT_ID}"
 echo "ARM_SUBSCRIPTION_ID   ${ARM_SUBSCRIPTION_ID}"
 echo "ARM_CLIENT_ID         ${ARM_CLIENT_ID}"
 
+cd terraform
+
 echo -e "\nRunning Terraform Fmt..."
 terraform fmt -check -no-color
 

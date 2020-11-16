@@ -27,18 +27,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy Azure Kubernetes Services
-        run: |
-          cd terraform
-          ./apply-terraform.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+        run: ./apply-terraform.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
 
       - name: Deploy Ingress Controller
-        run: |
-          ./deploy-ingress.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+        run: ./deploy-ingress.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
 
       - name: Deploy External DNS
-        run: |
-          ./deploy-external-dns.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+        run: ./deploy-external-dns.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
 
       - name: Deploy Podinfo
-        run: |
-          ./deploy-podinfo.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
+        run: ./deploy-podinfo.sh ${environment} ${{ secrets.ARM_CLIENT_SECRET }} ${{ secrets.ARM_CLIENT_ID }} ${{ secrets.ARM_SUBSCRIPTION_ID }} ${{ secrets.ARM_TENANT_ID }}
