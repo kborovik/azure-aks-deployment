@@ -1,8 +1,6 @@
 name: Build Terraform AzureCli image
 
 env:
-  DOCKER_SERVER: ghcr.io
-  DOCKER_USER: ${{ github.actor }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 on:
@@ -21,8 +19,5 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Log into GitHub registry
-        run: echo "${DOCKER_PASSWORD}" | docker login "${DOCKER_SERVER}" --username "${DOCKER_USER}" --password-stdin
-
       - name: Build and Push Docker Image
-        run: ./build-terraform-image.sh
+        run: ./build-terraform-image.sh "${DOCKER_PASSWORD}"
