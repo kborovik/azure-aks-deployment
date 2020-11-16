@@ -1,3 +1,6 @@
 [submodule "src/podinfo"]
 	path = src/podinfo
 	url = git@github.com:stefanprodan/podinfo.git
+[submodule "src/wrk2"]
+	path = src/wrk2
+	url = git@github.com:giltene/wrk2.git
