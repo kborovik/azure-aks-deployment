@@ -27,5 +27,4 @@ jobs:
         run: echo "${DOCKER_PASSWORD}" | docker login "${DOCKER_SERVER}" --username "${DOCKER_USER}" --password-stdin
 
       - name: Build and Push Docker Image
-        run: |
-          ./build-wrk2-image.sh
+        run: ./build-wrk2-image.sh
