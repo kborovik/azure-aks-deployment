@@ -28,5 +28,4 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd docker/wrk2
-          ./build-push-docker.sh
+          ./build-wrk2-image.sh
