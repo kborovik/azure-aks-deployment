@@ -25,15 +25,4 @@ jobs:
         run: echo "${DOCKER_PASSWORD}" | docker login "${DOCKER_SERVER}" --username "${DOCKER_USER}" --password-stdin
 
       - name: Build and Push Docker Image
-        run: |
-          IMAGE_NAME="terraform-azure-cli"
-          DOCKER_FILE="$(pwd)/docker/terraform/Dockerfile"
-          TERRAFORM_VERSION="$(grep -e '^ARG TERRAFORM_VERSION' ${DOCKER_FILE} | cut -d "=" -f 2)"
-          DOCKER_TAG="${DOCKER_SERVER}/${DOCKER_USER}/${IMAGE_NAME}"
-
-          docker build --tag="${DOCKER_TAG}:${TERRAFORM_VERSION}" --file="${DOCKER_FILE}" .
-
-          docker tag "${DOCKER_TAG}:${TERRAFORM_VERSION}" "${DOCKER_TAG}:latest"
-
-          docker push "${DOCKER_TAG}:${TERRAFORM_VERSION}"
-          docker push "${DOCKER_TAG}:latest"
+        run: ./build-terraform-image.sh
