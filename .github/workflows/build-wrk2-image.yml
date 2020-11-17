@@ -1,4 +1,4 @@
-name: Build Podinfo image
+name: Build wrk2 image
 
 env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -14,7 +14,7 @@ on:
 jobs:
   build:
     name: Build Docker Images
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
