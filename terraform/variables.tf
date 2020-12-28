@@ -49,7 +49,7 @@ variable "client_secret" {
 variable "kubernetes_version" {
   description = "Kubernetes version to deploy"
   type        = string
-  default     = "1.19.0"
+  default     = "1.19.3"
 }
 
 variable "vm_size" {
