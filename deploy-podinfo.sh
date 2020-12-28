@@ -36,4 +36,5 @@ helm upgrade podinfo charts/podinfo \
   --namespace "default" \
   --atomic \
   --wait \
-  --timeout=2m
+  --timeout=2m \
+  --set ingress.hosts[0]="podinfo.${ENVIRONMENT}.lab5.ca"
