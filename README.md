@@ -4,13 +4,14 @@ This work aims to explore ways to automate Continuous Delivery and Continuous De
 
 ---
 
-# Problem
+# The Problems I Work to Address
 
 - What is the difference between **development**, **staging**, and **production** infrastructure configuration at any given time?
+- Can the human error be eliminated during the change promotion between **development**, **staging** and **production** environments?
+- Can the changes to the infrastructure and application code be **safely** end-to-end tested?
+- Can the 1% failure rate of **production** services be reproduced in a **staging** environment?
 
-- Can the changes to the application code and infrastructure configuration be safely and reliably end-to-end tested?
-
-- Can the 5% failure rate with "503 Service Unavailable" in a **production** environment be reproduced in a **staging** environment?
+![Code Testing](code-test.jpeg)
 
 ---
 
